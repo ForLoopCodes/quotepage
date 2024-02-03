@@ -12,8 +12,8 @@ This project is a dynamic quote generator web page built using Svelte, HTML, CSS
 2. **Colorful Background:**
    - The background color of the page changes dynamically on each visit, creating a visually appealing atmosphere.
 
-3. **Animated Noise Effect:**
-   - An SVG element with a fractal noise filter produces an animated noise effect, enhancing the overall aesthetic of the page.
+3. **Noise Effect:**
+   - An SVG element with a fractal noise filter produces a noise effect, enhancing the overall aesthetic of the page.
 
 4. **Svelte Framework:**
    - Svelte is used for building reactive components and managing the dynamic behavior of the web page.
@@ -50,13 +50,6 @@ To run this project locally, follow these steps:
     ```
 
 4. Open your web browser and navigate to the provided local server URL.
-
-## Project Structure
-
-- **`src/App.svelte`:** The main Svelte component containing the structure and behavior of the web page.
-- **`public/index.html`:** The entry HTML file.
-- **`public/global.css`:** Global CSS styles.
-- **`public/favicon.png`:** Project favicon.
 
 ## Customize
 
