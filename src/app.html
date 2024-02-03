@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap"
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<style>
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+			html,
+			body {
+				height: 100%;
+				width: 100%;
+				margin: 0 !important;
+				font-family: 'Playfair display';
+			}
+		</style>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: none">%sveltekit.body%</div>
+		<svg
+			width="100vw"
+			height="100%"
+			style="position: absolute; z-index: 2; opacity: 0.7"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<filter id="noiseFilter">
+				<feTurbulence
+					type="fractalNoise"
+					baseFrequency="0.65"
+					numOctaves="3"
+					stitchTiles="stitch"
+				/>
+			</filter>
+
+			<rect width="100%" height="100%" filter="url(#noiseFilter)" />
+		</svg>
+		<div
+			class="body"
+			style="
+				height: 100vh;
+				width: 100vw;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				pointer-events: none;
+				position: absolute;
+				z-index: 1;
+			"
+		></div>
+		<div
+			style="
+				height: 100vh;
+				width: 100vw;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				pointer-events: none;
+				position: absolute;
+				z-index: 3;
+			"
+		>
+			<h1
+				class="quoteholder"
+				style="
+					width: 70%;
+					font-size: 3rem;
+					color: #fff;
+					/* text-shadow:
+						1px 1px 0 #000,
+						-1px -1px 0 #000,
+						1px -1px 0 #000,
+						-1px 1px 0 #000; */
+				"
+			>
+				...
+			</h1>
+		</div>
+		<script>
+			let randomColor = () => {
+				let r = Math.floor(Math.random() * 128) + 40;
+				let g = Math.floor(Math.random() * 128) + 40;
+				let b = Math.floor(Math.random() * 128) + 40;
+
+				// Convert values to hexadecimal format
+				let color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+				return color;
+			};
+
+			document.querySelector('.body').style.backgroundColor = randomColor();
+			let randomQuoteFromAPI = async () => {
+				let response = await fetch('https://api.quotable.io/random');
+				let data = await response.json();
+				console.log(data.content);
+				document.querySelector('.quoteholder').innerText = data.content;
+			};
+			randomQuoteFromAPI();
+		</script>
+	</body>
+</html>
