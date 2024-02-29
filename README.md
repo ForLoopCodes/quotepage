@@ -4,6 +4,11 @@
 
 This project is a dynamic quote generator web page built using Svelte, HTML, CSS, and JavaScript. It fetches random quotes from the [Quotable](https://api.quotable.io/) API, featuring a visually appealing background with a dynamically changing color, an animated noise effect, and custom font styling. Svelte is employed for a reactive and efficient front-end development experience.
 
+## Screenshots
+
+<img width="79%" src="https://github.com/ForLoopCodes/quotepage/assets/89027512/226e54e4-5c56-487f-9871-2a2a2e31fe75"/><img width="21%" src="https://github.com/ForLoopCodes/quotepage/assets/89027512/678782a8-567b-4f7d-ab40-c6d7ed5fe602"/>
+
+
 ## Features
 
 1. **Dynamic Quote Display:**
