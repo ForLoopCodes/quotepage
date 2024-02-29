@@ -17,9 +17,13 @@
 				height: 100%;
 				width: 100%;
 				margin: 0 !important;
+				background-color: #fff;
+				overflow: hidden;
 				font-family: 'mongodb value serif', 'Playfair display';
 			}
-
+		    .circle1, .circle2, .circle3, .circle4 {
+				transition: 3s ease;
+			}
 			@media screen and (max-width: 800px) {
 				.quoteholder {
 					font-size: 1.75rem !important;
@@ -33,13 +37,13 @@
 		<svg
 			width="100vw"
 			height="100%"
-			style="position: absolute; z-index: 2; opacity: 0.7"
+			style="position: absolute; z-index: 2; opacity: 0.4"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<filter id="noiseFilter">
 				<feTurbulence
 					type="fractalNoise"
-					baseFrequency="0.65"
+					baseFrequency="0.6"
 					numOctaves="3"
 					stitchTiles="stitch"
 				/>
@@ -47,6 +51,18 @@
 
 			<rect width="100%" height="100%" filter="url(#noiseFilter)" />
 		</svg>
+		<div class="circle1" style="position: absolute; z-index: 0; opacity: 0.9; border-radius: 50vw;
+		background-color: #000; height: 35vw; width: 35vw; top: -10vw; left: -10vw; pointer-events: none;">
+		</div>
+		<div class="circle2" style="position: absolute; z-index: 0; opacity: 0.9; border-radius: 50vw;
+		background-color: #000; height: 35vw; width: 35vw; bottom: -10vw; left: -10vw; pointer-events: none;">
+		</div>
+		<div class="circle3" style="position: absolute; z-index: 0; opacity: 0.9; border-radius: 50vw;
+		background-color: #000; height: 35vw; width: 35vw; top: -10vw; right: -10vw; pointer-events: none;">
+		</div>
+		<div class="circle4" style="position: absolute; z-index: 0; opacity: 0.9; border-radius: 50vw;
+		background-color: #000; height: 35vw; width: 35vw; bottom: -10vw; right: -10vw; pointer-events: none;">
+		</div>
 		<div
 			class="body"
 			style="
@@ -58,6 +74,8 @@
 				text-align: center;
 				pointer-events: none;
 				position: absolute;
+				backdrop-filter: blur(200px);
+				background-color: transparent;
 				z-index: 1;
 			"
 		></div>
@@ -79,7 +97,7 @@
 				style="
 					width: 70%;
 					font-size: 3rem;
-					color: #fff;
+					color: #000;
 					/* text-shadow:
 						1px 1px 0 #000,
 						-1px -1px 0 #000,
@@ -92,23 +110,58 @@
 		</div>
 		<script>
 			let randomColor = () => {
-				let r = Math.floor(Math.random() * 128) + 40;
-				let g = Math.floor(Math.random() * 128) + 40;
-				let b = Math.floor(Math.random() * 128) + 40;
+				let r = Math.floor(Math.random() * 255);
+				let g = Math.floor(Math.random() * 255);
+				let b = Math.floor(Math.random() * 255);
 
 				// Convert values to hexadecimal format
-				let color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+				let color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}41`;
 				return color;
 			};
 
-			document.querySelector('.body').style.backgroundColor = randomColor();
+			document.querySelector('.circle1').style.backgroundColor = randomColor();
+			document.querySelector('.circle2').style.backgroundColor = randomColor();
+			document.querySelector('.circle3').style.backgroundColor = randomColor();
+			document.querySelector('.circle4').style.backgroundColor = randomColor();
+
+			setInterval(() => {
+				document.querySelector('.circle1').style.backgroundColor = randomColor();
+				document.querySelector('.circle2').style.backgroundColor = randomColor();
+				document.querySelector('.circle3').style.backgroundColor = randomColor();
+				document.querySelector('.circle4').style.backgroundColor = randomColor();
+			}, 3000);
+
 			let randomQuoteFromAPI = async () => {
 				let response = await fetch('https://api.quotable.io/random');
 				let data = await response.json();
 				console.log(data.content);
 				document.querySelector('.quoteholder').innerText = data.content;
 			};
+			// add event listener to the body
+			document.addEventListener('keyup', (e) => {
+				if (e.key === 'Enter') {
+					randomQuoteFromAPI();
+					randomColor();
+				}
+				if (e.key === '/') {
+					window.location.href = 'https://forloopcodes.github.io/starton';
+				}
+				if (e.key === 'd') {
+					// dark mode
+					if (localStorage.getItem('theme') === 'light') {
+						localStorage.setItem('theme', 'dark');
+						document.querySelector('body').style.backgroundColor = '#000';
+						document.querySelector('.quoteholder').style.color = '#fff';
+					} else {
+						localStorage.setItem('theme', 'light');
+						document.querySelector('body').style.backgroundColor = '#fff';
+						document.querySelector('.quoteholder').style.color = '#000';
+					}
+				}
+			});
 			randomQuoteFromAPI();
+			document.querySelector('body').style.backgroundColor = localStorage.getItem('theme') === 'dark' ? '#000' : '#fff';
+			document.querySelector('.quoteholder').style.color = localStorage.getItem('theme') === 'dark' ? '#fff' : '#000';
 		</script>
 	</body>
 </html>
